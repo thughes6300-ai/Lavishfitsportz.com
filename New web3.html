@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>LavishFitz Basketball Tournaments — Fall 2025 (v2)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{
+      --bg:#0b0a09;
+      --card:#111018;
+      --muted:#cfc6bd;
+      --accent:#ff9f1c; /* brighter warm gold */
+      --accent-2:#7a1f12; /* deep maroon */
+      --radius:14px;
+      --maxw:980px;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,#070606 0%, #1a0f0a 100%);color:#fff;line-height:1.45}
+    .wrap{max-width:var(--maxw);margin:36px auto;padding:22px;border-radius:var(--radius);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);box-shadow:0 12px 50px rgba(0,0,0,0.6)}
+    
+    /* Hero with two-image crossfade + zoom (plays once on load) */
+    .hero{position:relative;height:380px;border-radius:calc(var(--radius) - 4px);overflow:hidden;display:flex;align-items:flex-end;padding:28px}
+    .hero .layer{position:absolute;inset:0;background-size:cover;background-position:center center;transform-origin:center center}
+    .hero .layer.img1{background-image:url('https://images.unsplash.com/photo-1549576490-b0b4831ef60a?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=7f3f9f8e5a7c2d3b');filter:contrast(1.05) saturate(1.15) brightness(1.02)}
+    .hero .layer.img2{background-image:url('https://images.unsplash.com/photo-1502759775546-16d3ea6a6b29?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=9c0a4f3fd6a1d3c2');filter:contrast(1.08) saturate(1.2) brightness(1.05);opacity:0}
+    .hero .overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,6,6,0.08), rgba(6,3,2,0.55));pointer-events:none}
+    .hero .content{position:relative;z-index:3;color:var(--accent);text-shadow:0 6px 28px rgba(0,0,0,0.7)}
+    .hero h1{margin:0;font-size:36px}
+    .hero p{margin:6px 0 0;color:var(--muted);font-weight:600}
+
+    /* animation - fade img2 in while zooming both slightly; plays once */
+    @keyframes heroFadeZoom {
+      0% { transform: scale(1); opacity: 1; }
+      60% { transform: scale(1.06); opacity: 1; }
+      100% { transform: scale(1.12); opacity: 1; }
+    }
+    @keyframes heroCross {
+      0% { opacity:0 }
+      10% { opacity:0 }
+      70% { opacity:1 }
+      100% { opacity:1 }
+    }
+    /* apply animation once */
+    .hero .layer { animation: heroFadeZoom 7s cubic-bezier(.2,.9,.2,1) 1 forwards; }
+    .hero .layer.img2 { animation: heroCross 7s ease 1 forwards, heroFadeZoom 7s cubic-bezier(.2,.9,.2,1) 1 forwards; }
+
+    .grid{display:grid;grid-template-columns:1fr 380px;gap:24px;margin-top:20px}
+    @media(max-width:920px){.grid{grid-template-columns:1fr;padding:0 12px} .hero{height:300px} .hero h1{font-size:28px}}
+
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    h2,h3{color: #ffd88c;margin:0 0 8px}
+    h4{margin:6px 0;color:var(--accent-2)}
+    p{margin:0 0 10px;color:#e9e0d6}
+    .muted{color:var(--muted);font-size:14px}
+
+    ul{margin:8px 0 16px 20px;color:#eae3da}
+    li strong{color:#fff}
+
+    .inline-photo{width:100%;border-radius:10px;margin:14px 0;display:block;object-fit:cover;height:180px;box-shadow:0 12px 40px rgba(0,0,0,0.6);filter:contrast(1.06) saturate(1.12) brightness(1.03)}
+
+    form label{display:block;margin:10px 0 6px;font-weight:700;color:#fff}
+    input[type=text],input[type=email],select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#fff;font-size:15px}
+    button.cta{background:linear-gradient(90deg,var(--accent),#ff6a00);border:none;padding:12px 16px;border-radius:10px;color:#fff;font-weight:800;cursor:pointer;box-shadow:0 8px 30px rgba(255,159,28,0.14)}
+    button.cta:hover{transform:translateY(-2px)}
+
+    .top-actions{display:flex;gap:12px;align-items:center}
+    .pill{background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.02);font-weight:700;color:var(--muted)}
+
+    .bracket{margin-top:12px;padding:12px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));border:1px dashed rgba(255,255,255,0.04)}
+    .footer{margin-top:18px;font-size:13px;color:var(--muted)}
+    a.link{color:var(--accent);text-decoration:none;font-weight:700}
+    .register-top{margin-left:auto}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero" aria-hidden="false">
+      <div class="layer img1"></div>
+      <div class="layer img2"></div>
+      <div class="overlay"></div>
+
+      <div class="content" style="padding:20px;z-index:3">
+        <h1>LavishFitz Tournament — Fall 2025 (v2)</h1>
+        <p>Real tournament action • Enhanced lighting • Indoor & outdoor mix</p>
+      </div>
+
+      <div style="position:absolute;left:20px;top:20px;display:flex;gap:10px;align-items:center;z-index:4">
+        <span class="pill">Teams: $1600</span>
+        <span class="pill">$400 / person</span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <main>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=3d3a5f6b1ad5" class="inline-photo">
+          <h2>Event Details</h2>
+          <ul>
+            <li><strong>Organizer:</strong> LavishFitz</li>
+            <li><strong>Location:</strong> Community Sports Center — (Enter your address)</li>
+            <li><strong>Dates:</strong> Labor Day Weekend (Aug 30–Sep 1), Halloween Weekend (Oct 31–Nov 2), Veterans Day Weekend (Nov 8–10), Thanksgiving Weekend (Nov 27–30) — 2025</li>
+            <li><strong>Divisions:</strong> 8U, 10U, 12U, 14U, High School, Adults (Open &amp; 35+)</li>
+            <li><strong>Format:</strong> Pool play into single-elimination bracket. 5-7 min quarters for youth, 10-min halves for adults.</li>
+            <li><strong>Entry Fee:</strong> Teams: $1600 / Individuals: $400</li>
+          </ul>
+
+          <h3>How Registration Works</h3>
+          <ol>
+            <li>Fill the registration form (right).</li>
+            <li>Pay the entry fee via Venmo / CashApp / PayPal (payment details below).</li>
+            <li>Once registrations close we'll publish a live bracket and email confirmations.</li>
+          </ol>
+
+          <h3>Payment</h3>
+          <ul>
+            <li>Venmo: @LavishFitz</li>
+            <li>CashApp: $LavishFitz</li>
+            <li>PayPal: payments@lavishfitz.com</li>
+          </ul>
+
+          <div class="bracket">
+            <h4>Live Bracket & Schedule</h4>
+            <p class="muted">After registrations close, a live bracket will be published here (we recommend Challonge, Toornament, or BracketHQ). Paste your bracket link below when ready.</p>
+            <p id="bracket-placeholder" class="muted">Bracket link: <em>Not published yet</em></p>
+          </div>
+
+          <div class="footer">
+            <p><strong>Contact:</strong> <a class="link" href="mailto:thughes6300@gmail.com">thughes6300@gmail.com</a> | Phone: (Enter phone)</p>
+            <p class="muted">Tip: Host this file on Netlify or GitHub Pages for a public URL.</p>
+          </div>
+        </div>
+      </main>
+
+      <aside>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1541446654331-5b98f88f5ac7?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=2a6e5d6e7b8c" class="inline-photo">
+          <h3 id="register">Register</h3>
+          <form id="regForm" action="mailto:thughes6300@gmail.com" method="post" enctype="text/plain" onsubmit="submitted(event);">
+            <label for="team">Team / Player Name</label>
+            <input id="team" name="Team" type="text" placeholder="Team or Player name" required>
+
+            <label for="age">Division (age)</label>
+            <select id="age" name="Division" required>
+              <option value="">Choose</option>
+              <option>8U</option>
+              <option>10U</option>
+              <option>12U</option>
+              <option>14U</option>
+              <option>High School</option>
+              <option>Adults - Open</option>
+              <option>Adults - 35+</option>
+            </select>
+
+            <label for="captain">Contact Name</label>
+            <input id="captain" name="ContactName" type="text" placeholder="Your name" required>
+
+            <label for="email">Contact Email</label>
+            <input id="email" name="Email" type="email" placeholder="you@example.com" required>
+
+            <label for="phone">Contact Phone</label>
+            <input id="phone" name="Phone" type="text" placeholder="(xxx) xxx-xxxx" required>
+
+            <label for="notes">Notes (players, jersey color, etc.)</label>
+            <textarea id="notes" name="Notes" placeholder="Any notes" rows="3"></textarea>
+
+            <div style="display:flex;gap:10px;margin-top:8px;align-items:center">
+              <button type="submit" class="cta">Submit Registration</button>
+              <a href="#register" class="pill register-top">Need Help?</a>
+            </div>
+          </form>
+
+          <p class="muted" style="margin-top:10px">This form opens the user's email client with the registration. If you'd like an automated form (Google Forms, Typeform), I can add it.</p>
+        </div>
+
+        <div style="margin-top:14px" class="card">
+          <h3>Hosting — Quick Steps</h3>
+          <h4>Netlify (fastest)</h4>
+          <ol>
+            <li>Go to <a class="link" href="https://app.netlify.com/drop" target="_blank" rel="noopener">Netlify Drop</a>.</li>
+            <li>Drag &amp; drop this ZIP file or the extracted site folder. Netlify will give you an instant public URL you can customize.</li>
+          </ol>
+
+          <h4>GitHub Pages</h4>
+          <ol>
+            <li>Create a GitHub repo (e.g., <code>lavishfitz-tournament</code>).</li>
+            <li>Upload this HTML file to the repo.</li>
+            <li>Enable Pages in repo settings (use main branch). Your site will be: <code>https://yourgithubname.github.io/lavishfitz-tournament/</code></li>
+          </ol>
+
+          <p class="muted">Want me to add Google Fonts, analytics, or a custom domain? I can include those files too.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    function submitted(e) {
+      setTimeout(function(){
+        alert('Your email client should open. If it doesn\\'t, email thughes6300@gmail.com with your registration details.');
+      }, 250);
+    }
+
+    (function(){
+      try {
+        const params = new URLSearchParams(location.search);
+        const b = params.get('bracket');
+        if (b) {
+          const el = document.getElementById('bracket-placeholder');
+          el.innerHTML = 'Bracket link: <a class="link" href="'+b+'" target="_blank" rel="noopener">'+b+'</a>';
+        }
+      } catch(e){}
+    })();
+  </script>
+</body>
+</html>
