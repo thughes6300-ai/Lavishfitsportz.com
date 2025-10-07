@@ -1,1 +1,2 @@
+lavishfitsportz.com
 [![Netlify Status](https://api.netlify.com/api/v1/badges/c85e6df4-dce7-4ace-a3a0-4022033d1907/deploy-status)](https://app.netlify.com/projects/lavishfitsportz/deploys)
